@@ -1,0 +1,60 @@
+function timeRd(min, max) {
+    min *= 1000;
+    max *= 1000;
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function falar(msg, time) {
+    //        resolve: chama algo quando a função quando a função executa corretamente
+    //        reject: quando acontece um erro no código 
+    return new Promise((resolve, reject) => {
+        if(typeof msg !== 'string') reject('BAD VALUE')
+
+        setTimeout(() => {
+            resolve(msg)
+        }, time);
+    });
+};
+
+//    promise.all resolve todos os promises 
+const promises = [
+    'começam os promises',
+    falar('PROMISE 01', 1000),
+    falar('PROMISE 02', 2000),
+    falar('PROMISE 03', 200),
+    falar(3213, 10),
+    'termina os promises',
+]
+
+Promise.all(promises)
+.then(valor => console.log(valor))
+.catch(e => console.log('erro:', e))
+
+
+
+//     promise.race entrega a resposta mais rápida mas executa todo o código na fila
+const promises_race = [
+    falar('PROMISE 01', 1000),
+    falar('PROMISE 02', 2000),
+    falar('PROMISE 03', 200),
+]
+
+Promise.race(promises_race)
+.then(valor => console.log(valor))
+.catch(e => console.log('erro:', e))
+
+
+
+//     promise.resolve  já entrega o valor direto do promise resolve
+
+const baixarPagina = () => {
+    const emCache = true
+
+    if (emCache) {
+        return Promise.resolve('pagina em cache');
+    } else {
+        return falar('baixei a pagina', 2000);
+    }
+}
+
+baixarPagina().then(dadosPagina => console.log(dadosPagina)).catch(e => console.log('error:', e))
