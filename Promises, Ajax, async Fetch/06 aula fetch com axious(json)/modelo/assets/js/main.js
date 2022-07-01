@@ -1,45 +1,31 @@
+//fetch('pessoas.json')
+//    .then(resposta => resposta.json())
+//    .then(json => carregaElementosPagina(json));
 
+axios('pessoas.json')
+    .then(resposta => carregaElementosPagina(resposta.data))
 
-document.addEventListener("click", e => {
+function carregaElementosPagina(json) {
+    const table = document.createElement('table');
 
-    const el = e.target;
-    const tag = el.tagName.toLowerCase();
+    for(let pessoas of json) {
+        const tr = document.createElement('tr');
 
-    if (tag === 'a') {
-        e.preventDefault();
-        carregaPagina(el);
+        let td = document.createElement('td');
+        td.innerHTML = pessoas.nome;
+        tr.appendChild(td);
+
+        //let td2 = document.createElement('td');
+        //td2.innerHTML = pessoas.idade;
+        //tr.appendChild(td2);
+
+        let td3 = document.createElement('td');
+        td3.innerHTML = pessoas.salario;
+        tr.appendChild(td3);
+
+        table.appendChild(tr);        
     }
-});
 
-async function carregaPagina(el) {
-    
-    try {
-        const href = el.getAttribute('href');
-        const response = await fetch(href);
-    
-        if (response.status !== 200) throw new Error('ERROR DIF 200');
-    
-        const html = await response.text();
-        carregarResultado(html)
-        
-    } catch(e) {
-        console.error(e);
-    }
-}
-        
-
-function carregarResultado(response) {
     const resultado = document.querySelector('.resultado');
-    resultado.innerHTML = response;
+    resultado.appendChild(table);
 }
-
-
-
-
-
-fetch('pagina04.html', {})
-.then(resposta => {
-    if(resposta !== 200) throw new Error('Error 404 nosso');
-})
-.then(html => console.log(html))
-.catch(e => console.error(e))
