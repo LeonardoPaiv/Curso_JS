@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","mappings":";;;;;AAAA,IAAMA,GAAG,GAAG,UAAZ;AAEAC,KAAK,CAACD,GAAD,CAAL,C","sources":["webpack://config/./src/index.js"],"sourcesContent":["const leo = 'leonardo'\r\n\r\nalert(leo);"],"names":["leo","alert"],"sourceRoot":""}
